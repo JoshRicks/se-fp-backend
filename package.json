@@ -1,0 +1,19 @@
+{
+  "name": "se-fp-backend",
+  "version": "1.0.0",
+  "description": "news explorer backend",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoshRicks/se-fp-backend.git"
+  },
+  "author": "Josh Ricks",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoshRicks/se-fp-backend/issues"
+  },
+  "homepage": "https://github.com/JoshRicks/se-fp-backend#readme"
+}
