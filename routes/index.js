@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 const authRouter = require("./authRoutes");
 const articleRouter = require("./articleRoutes");
+const { NotFoundError } = require("../utils/NotFoundError");
 
 router.use("/saved-news", articleRouter);
 router.use("/", authRouter);

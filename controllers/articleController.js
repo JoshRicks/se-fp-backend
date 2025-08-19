@@ -8,7 +8,7 @@ const { NotFoundError } = require("../utils/NotFoundError");
 const { AuthorizationError } = require("../utils/AuthorizationError");
 
 const getSavedArticles = (req, res, next) => {
-  Article.find({})
+  Article.find({ owner: req.user._id })
     .then((articles) => {
       res.send(articles);
     })
@@ -63,15 +63,26 @@ const deleteArticle = (req, res, next) => {
   const { articleId } = req.params;
 
   if (!articleId) {
-    throw new NotFoundError("Item ID is required");
+    throw new NotFoundError("Article ID is required");
   }
 
   if (!mongoose.Types.ObjectId.isValid(articleId)) {
-    throw new BadRequestError("invalid Item ID format");
+    throw new BadRequestError("invalid Article ID format");
   }
-  return Article.findByIdAndDelete(articleId)
-    .then((deletedArticle) => {
-      res.status(200).send({ data: deletedArticle });
+  return Article.findById(articleId)
+    .then((articleToDelete) => {
+      if (!articleToDelete) {
+        throw new NotFoundError("Article not found");
+      }
+      if (
+        !articleToDelete.owner ||
+        !articleToDelete.owner.equals(req.user._id)
+      ) {
+        throw new ForbiddenError("Forbidden");
+      }
+      return Article.findByIdAndDelete(articleId).then((articles) => {
+        res.status(200).send({ data: articles });
+      });
     })
     .catch((err) => {
       console.error(err);
@@ -81,7 +92,7 @@ const deleteArticle = (req, res, next) => {
         );
       }
       if (err.name === "NotFoundError") {
-        return next(new NotFoundError("Item not found"));
+        return next(new NotFoundError("Article not found"));
       }
       if (err.name === "BadRequestError") {
         return next(

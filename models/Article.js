@@ -26,7 +26,11 @@ const articleSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator(value) {
-        return validator.isURL(value);
+        return validator.isURL(value, {
+          require_protocol: true,
+          require_tld: true,
+          require_host: true,
+        });
       },
       message: "Must be a valid URL",
     },
@@ -36,7 +40,11 @@ const articleSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator(value) {
-        return validator.isURL(value);
+        return validator.isURL(value, {
+          require_protocol: true,
+          require_tld: true,
+          require_host: true,
+        });
       },
       message: "Must be a valid URL",
     },
