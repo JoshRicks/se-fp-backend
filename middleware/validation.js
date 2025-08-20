@@ -1,4 +1,12 @@
 const { Joi, celebrate } = require("celebrate");
+const validator = require("validator");
+
+const validateURL = (value, helpers) => {
+  if (validator.isURL(value)) {
+    return value;
+  }
+  return helpers.error("string.uri");
+};
 
 const validateUser = celebrate({
   body: Joi.object().keys({
@@ -31,6 +39,34 @@ const validateLogin = celebrate({
   }),
 });
 
+const validateSavedArticle = celebrate({
+  params: Joi.object().keys({
+    keyword: Joi.string().required().min(1).messages({
+      "string.empty": "A search is required",
+    }),
+    text: Joi.string().required().messages({
+      "string.empty": "Text is required",
+    }),
+    date: Joi.string().required().messages({
+      "string.empty": "Date is required",
+    }),
+    source: Joi.string().required().messages({
+      "string.empty": "Source is required",
+    }),
+    title: Joi.string().required().messages({
+      "string.empty": "Title is required",
+    }),
+    link: Joi.string().required().custom(validateURL).messages({
+      "string.empty": 'The "Link" field must be filled in',
+      "string.uri": 'the "Link" field must be a valid url',
+    }),
+    image: Joi.string().required().custom(validateURL).messages({
+      "string.empty": 'The "Image" field must be filled in',
+      "string.uri": 'the "Image" field must be a valid url',
+    }),
+  }),
+});
+
 const validateArticleId = celebrate({
   params: Joi.object().keys({
     articleId: Joi.string().required().hex().length(24),
@@ -41,4 +77,5 @@ module.exports = {
   validateArticleId,
   validateLogin,
   validateUser,
+  validateSavedArticle,
 };

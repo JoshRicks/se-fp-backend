@@ -45,13 +45,6 @@ const saveArticle = (req, res, next) => {
           )
         );
       }
-      if (err.name === "BadRequestError") {
-        return next(
-          new BadRequestError(
-            "The provided URL is not valid. Please enter a valid article link."
-          )
-        );
-      }
       if (err.name === "AuthorizationError") {
         return next(new AuthorizationError("Unauthorized"));
       }
@@ -93,13 +86,6 @@ const deleteArticle = (req, res, next) => {
       }
       if (err.name === "NotFoundError") {
         return next(new NotFoundError("Article not found"));
-      }
-      if (err.name === "BadRequestError") {
-        return next(
-          new BadRequestError(
-            "The request to delete this article was not properly formatted."
-          )
-        );
       }
       if (err.name === "AuthorizationError") {
         return next(new AuthorizationError("Unauthorized"));

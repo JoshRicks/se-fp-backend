@@ -19,9 +19,6 @@ const getCurrentUser = (req, res, next) => {
     })
     .catch((err) => {
       console.error(err);
-      if (err.name === "BadRequestError") {
-        return next(new BadRequestError({ message: err.message }));
-      }
       return next(err);
     });
 };
@@ -53,9 +50,6 @@ const createUser = (req, res, next) => {
       if (err.code === 11000) {
         return next(new ConflictError("Email already exists in database"));
       }
-      if (err.name === "BadRequestError") {
-        return next(new BadRequestError({ message: err.message }));
-      }
       return next(err);
     });
 };
@@ -79,9 +73,6 @@ const login = (req, res, next) => {
         return next(new NotFoundError("User not found"));
       }
       if (err.name === "ValidationError") {
-        return next(new BadRequestError({ message: err.message }));
-      }
-      if (err.name === "BadRequestError") {
         return next(new BadRequestError({ message: err.message }));
       }
       if (err.name === "AuthorizationError") {

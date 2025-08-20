@@ -2,21 +2,26 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const helmet = require("helmet");
 const { errors } = require("celebrate");
 
 const routes = require("./routes/index");
 const { globalErrorHandler } = require("./middleware/errors");
 const { requestLogger, errorLogger } = require("./middleware/logger");
+const { apiLimiter } = require("./middleware/apiLimiter");
 
-const PORT = process.env.PORT;
+const { PORT = 3001, MONGO_URI = "mongodb://localhost:27017/NewsExplorer_db" } =
+  process.env;
 
 const app = express();
 
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect(MONGO_URI);
 
+app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use("/api/", apiLimiter);
 
 app.use(requestLogger);
 

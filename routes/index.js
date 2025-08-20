@@ -4,8 +4,8 @@ const authRouter = require("./authRoutes");
 const articleRouter = require("./articleRoutes");
 const { NotFoundError } = require("../utils/NotFoundError");
 
-router.use("/saved-news", articleRouter);
 router.use("/", authRouter);
+router.use("/saved-news", articleRouter);
 
 router.use(() => {
   console.error();
