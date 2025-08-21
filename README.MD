@@ -4,6 +4,11 @@ A **full-stack web application** that lets users explore news articles, save the
 
 ---
 
+## 🎬 Access
+
+- GitHub: https://github.com/JoshRicks/se-fp-backend/
+- Live: coming soon
+
 ## 🚀 Highlights
 
 - **Full-Stack Development** – Designed and built both frontend (React) and backend (Node.js/Express).

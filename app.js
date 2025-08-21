@@ -9,9 +9,9 @@ const routes = require("./routes/index");
 const { globalErrorHandler } = require("./middleware/errors");
 const { requestLogger, errorLogger } = require("./middleware/logger");
 const { apiLimiter } = require("./middleware/apiLimiter");
+const { MONGO_URI } = require("./utils/config");
 
-const { PORT = 3001, MONGO_URI = "mongodb://localhost:27017/NewsExplorer_db" } =
-  process.env;
+const { PORT = 3001 } = process.env;
 
 const app = express();
 

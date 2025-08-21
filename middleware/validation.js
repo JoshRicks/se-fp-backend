@@ -40,7 +40,7 @@ const validateLogin = celebrate({
 });
 
 const validateSavedArticle = celebrate({
-  params: Joi.object().keys({
+  body: Joi.object().keys({
     keyword: Joi.string().required().min(1).messages({
       "string.empty": "A search is required",
     }),
